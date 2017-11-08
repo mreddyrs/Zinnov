@@ -20,6 +20,31 @@ $article_link_text=get_field('article_link_text');
 $white_paperslink_text=get_field('white_paperslink_text');
 $heading_request=get_field('heading_request');
 $request_info=get_field('request_info');
+$section_heading=get_field('section_heading');
+$section_image1=get_field('section_image1');
+$slider_heading1=get_field('slider_heading1');
+$section_image2=get_field('section_image2');
+$slider_heading2=get_field('slider_heading2');
+$section_image3=get_field('section_image3');
+$slider_heading3=get_field('slider_heading3');
+$section_image4=get_field('section_image4');
+$slider_heading4=get_field('slider_heading4');
+$slider_content_heading1=get_field('slider_content_heading1');
+$slider_content1=get_field('slider_content1');
+$slider1_link=get_field('slider1_link');
+$slider1_link_text=get_field('slider1_link_text');
+$slider_content_heading2=get_field('slider_content_heading2');
+$slider_content2=get_field('slider_content2');
+$slider2_link=get_field('slider2_link');
+$slider2_link_text=get_field('slider2_link_text');
+$slider_content_heading3=get_field('slider_content_heading3');
+$slider_content3=get_field('slider_content3');
+$slider3_link=get_field('slider3_link');
+$slider3_link_text=get_field('slider3_link_text');
+$slider_content_heading4=get_field('slider_content_heading4');
+$slider_content4=get_field('slider_content4');
+$slider4_link=get_field('slider4_link');
+$slider4_link_text=get_field('slider4_link_text');
 $faq_heading=get_field('faq_heading');
 $qus_1=get_field('qus_1');
 $ans_1=get_field('ans_1');
@@ -145,18 +170,21 @@ get_header();?>
       
       while($the_query->have_posts() ) : $the_query->the_post(); 
             {  
-                
+
+            	$trimtitle = get_the_content();
+    
+            $shorttitle = wp_trim_words( $trimtitle, $num_words = 20, $more = '… ' );
                  
               
               ?>
-                      <div class="card-thumbnail-img"><img src="<?php echo get_field('blog_image');?>" alt="" class="card-thumbnail img-responsive">
+                      <div class="card-thumbnail-img"><?php echo get_the_post_thumbnail( get_the_ID(), 'blog-thumbnail',array('alt' => 'Blog image','class' => 'card-thumbnail img-responsive')); ?>
                         <div class="label label--rect label--blue">by <span class="user-name"><?php echo get_field('blog_user_name');?> </span><?php echo get_field('blog_date');?></div>
                       </div>
                       
                       <div class="caption card-caption">
                         <div class="circle circle--ring circle--sm circle--ringBlue"></div>
-                        <h3 class="heading-md"><?php echo get_field('blog_heading');?></h3>
-                        <p class="info"><?php echo get_field('blog_info');?></p><a href="<?php echo get_permalink();?>" class="link"><?php echo get_field('link_text');?></a>
+                        <h3 class="heading-md"><?php the_title();?></h3>
+                        <p class="info"><?php echo $shorttitle;?></p><a href="<?php echo get_permalink();?>" class="link"><?php echo get_field('link_text');?></a>
                       </div>
                        <?php
                 }  endwhile;?>
@@ -180,9 +208,9 @@ get_header();?>
                     
                       <!--Start: Post 1-->
                       <li class="blog-post__list"><a href="<?php echo get_permalink(); ?>" class="media blog-media">
-                          <div class="blog-media__img"><img src="<?php echo get_field('blog_image');?>" class="media-object img-responsive"></div>
+                          <div class="blog-media__img"><?php echo get_the_post_thumbnail( get_the_ID(), 'blog-thumbnail',array('alt' => 'Blog image','class' => 'media-object img-responsive')); ?></div>
                           <div class="blog-media__body">
-                            <h4 class="media-heading"><?php echo get_field('blog_heading');?></h4>
+                            <h4 class="media-heading"><?php the_title();?></h4>
                             <div class="blog-posted">by <span><?php echo get_field('blog_user_name');?></span><?php echo get_field('blog_date');?></div>
                           </div></a></li>
                           <?php
@@ -220,11 +248,13 @@ get_header();?>
       while($the_query->have_posts() ) : $the_query->the_post(); 
             {  
                 
-                 
+                 $whitepapers_date = get_the_date( 'd M Y', get_the_ID() );
+                  	
+                  	$shorttitle = wp_trim_words( $trimtitle, $num_words = 15, $more = '… ' );
               
               ?>
-                      <div class="card-title-content"><a href="<?php echo get_permalink();?>" class="card-thumbnail-heading card-thumbnail-heading--white"><?php echo get_field('white_heading');?></a>
-                        <p class="info info--blue"><?php echo get_field('white_info');?></p><a href="<?php echo get_field('upload_pdf');?>" download class="link link--white"><i class="icon-down-arrow"></i>download</a>
+                      <div class="card-title-content"><a href="<?php echo get_permalink();?>" class="card-thumbnail-heading card-thumbnail-heading--white"><?php the_title();?></a>
+                        <p class="info info--blue"><?php echo $shorttitle;?></p><a href="<?php echo get_field('upload_pdf');?>" download class="link link--white"><i class="icon-down-arrow"></i>download</a>
                       </div>
                        <?php
                 }  endwhile;?>
@@ -239,6 +269,9 @@ get_header();?>
       while($the_query->have_posts() ) : $the_query->the_post(); 
             {  
                 
+              $whitepapers_date = get_the_date( 'd M Y', get_the_ID() );
+                  	
+                  	$shorttitle = wp_trim_words( $trimtitle, $num_words = 14, $more = '… ' );
                  
               
               ?>
@@ -247,8 +280,8 @@ get_header();?>
                         
                         
                           <div class="blog-posted"><?php echo get_field('posted_date');?>
-                          </div><a href="<?php echo get_permalink();?>" class="card-thumbnail-heading card-thumbnail-heading--black"><?php echo get_field('white_heading');?></a>
-                          <p class="info"><?php echo get_field('white_info');?></p>
+                          </div><a href="<?php echo get_permalink();?>" class="card-thumbnail-heading card-thumbnail-heading--black"><?php the_title(); ?></a>
+                          <p class="info"><?php echo $shorttitle;?></p>
                           
                         </div>
                         <?php
@@ -421,34 +454,35 @@ get_header();?>
         </div>
       </section>
       <!--Start: Why Draup-->
+      
       <section class="section section--why-draup">
         <div class="container">
           <div class="row">
             <div class="text-center">
-              <h4 class="section-heading">why <span class="text-uppercase">draup?</span></h4>
+              <h4 class="section-heading"><?php echo get_field('section_heading');?></span></h4>
             </div>
             <div class="col-sm-10 col-sm-offset-1 flex-slider">
               <div class="col-sm-5 hidden-xs">
                 <div class="row row--height">
                   <ul class="draup-indicator-slider">
                     <li class="draup-indicator-slider__list active">
-                      <div class="indicator-wrapper"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/real-time.svg" alt="Real Time Data" class="indicator-wrapper__img">
-                        <h4 class="slider-heading">real time data</h4>
+                      <div class="indicator-wrapper"><img src="<?php echo $section_image1;?>" alt="Real Time Data" class="indicator-wrapper__img">
+                        <h4 class="slider-heading"><?php echo $slider_heading1;?></h4>
                       </div>
                     </li>
                     <li class="draup-indicator-slider__list">
-                      <div class="indicator-wrapper"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/machine.svg" alt="machine" class="indicator-wrapper__img">
-                        <h4 class="slider-heading">Machine</h4>
+                      <div class="indicator-wrapper"><img src="<?php echo $section_image2;?>" alt="machine" class="indicator-wrapper__img">
+                        <h4 class="slider-heading"><?php echo $slider_heading2;?></h4>
                       </div>
                     </li>
                     <li class="draup-indicator-slider__list">
-                      <div class="indicator-wrapper"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/subject-matters.svg" alt="Subject" class="indicator-wrapper__img">
-                        <h4 class="slider-heading">Subject Matters</h4>
+                      <div class="indicator-wrapper"><img src="<?php echo $section_image3;?>" alt="Subject" class="indicator-wrapper__img">
+                        <h4 class="slider-heading"><?php echo $slider_heading3;?></h4>
                       </div>
                     </li>
                     <li class="draup-indicator-slider__list">
-                      <div class="indicator-wrapper"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/human-curation.svg" alt="In Depth Analysis" class="indicator-wrapper__img">
-                        <h4 class="slider-heading">human curation</h4>
+                      <div class="indicator-wrapper"><img src="<?php echo $section_image4;?>" alt="In Depth Analysis" class="indicator-wrapper__img">
+                        <h4 class="slider-heading"><?php echo $slider_heading4;?></h4>
                       </div>
                     </li>
                   </ul>
@@ -465,26 +499,26 @@ get_header();?>
                   <ul class="draup-content-slider">
                     <li class="draup-content-slider__list">
                       <div class="content-wrapper">
-                        <h3 class="slider-content-heading">Real Time Data</h3>
-                        <p class="info">DRAUP empowers the technology companies with real-time, in-depth and actionable insights about peers and lets them keep track of the fast changing global innovation landscape.</p><a href="javascript:void(0)" class="link">learn more</a>
+                        <h3 class="slider-content-heading"><?php echo $slider_content_heading1;?></h3>
+                        <p class="info"><?php echo $slider_content1;?></p><a href="<?php echo $slider1_link;?>" class="link"><?php echo $slider1_link_text;?></a>
                       </div>
                     </li>
                     <li class="draup-content-slider__list">
                       <div class="content-wrapper">
-                        <h3 class="slider-content-heading">In Depth Analysis</h3>
-                        <p class="info">DRAUP empowers the technology companies with real-time, in-depth and actionable insights about peers and lets them keep track of the fast changing global innovation landscape.</p><a href="javascript:void(0)" class="link">learn more</a>
+                        <h3 class="slider-content-heading"><?php echo $slider_content_heading2;?></h3>
+                        <p class="info"><?php echo $slider_content2;?></p><a href="<?php echo  $slider2_link;?>" class="link"><?php echo $slider2_link_text;?></a>
                       </div>
                     </li>
                     <li class="draup-content-slider__list">
                       <div class="content-wrapper">
-                        <h3 class="slider-content-heading">In Depth Analysis</h3>
-                        <p class="info">DRAUP empowers the technology companies with real-time, in-depth and actionable insights about peers and lets them keep track of the fast changing global innovation landscape.</p><a href="javascript:void(0)" class="link">learn more</a>
+                        <h3 class="slider-content-heading"><?php echo $slider_content_heading3;?></h3>
+                        <p class="info"><?php echo $slider_content3;?></p><a href="<?php echo $slider3_link;?>" class="link"><?php echo $slider3_link_text;?></a>
                       </div>
                     </li>
                     <li class="draup-content-slider__list">
                       <div class="content-wrapper">
-                        <h3 class="slider-content-heading">Human Curation</h3>
-                        <p class="info">DRAUP empowers the technology companies with real-time, in-depth and actionable insights about peers and lets them keep track of the fast changing global innovation landscape.</p><a href="javascript:void(0)" class="link">learn more</a>
+                        <h3 class="slider-content-heading"><?php echo $slider_content_heading4;?></h3>
+                        <p class="info"><?php echo $slider_content4;?></p><a href="<?php echo $slider4_link;?>" class="link"><?php echo $slider4_link_text;?></a>
                       </div>
                     </li>
                   </ul>
@@ -514,33 +548,55 @@ get_header();?>
                       <div class="bar__line"></div>
                     </div>
                     <ul class="faq-menu">
-                      <li class="faq-menu__list">GENERAL</li>
-                      <li class="faq-menu__list">ON BOARDING</li>
+                      <?php
+        $terms = get_terms("list_faq",array( 'parent' => 0 ));
+        $l=1;
+        foreach ( $terms as $term ) { 
+        $termname = strtolower($term->name);
+        $termname = str_replace(' ', '-', $termname);
+        ?>
+                      <li class="faq-menu__list"><?php echo $term->name; ?></li>
+                    <!--   <li class="faq-menu__list">ON BOARDING</li>
                       <li class="faq-menu__list">COST/BILLING</li>
                       <li class="faq-menu__list">DATA AND UPDATES</li>
                       <li class="faq-menu__list">SUBSCRIBTION</li>
-                      <li class="faq-menu__list">SECTORS</li>
+                      <li class="faq-menu__list">SECTORS</li> -->
+                       <?php  $l++;} ?>
                     </ul>
                   </div>
                 </div>
               </div>
-              <div class="col-sm-7">
+             <div class="col-sm-7">
                 <div class="row">
                   <div class="qa-wrapper">
                     <ul class="qa-menu">
+                     <?php 
+	  
+      $the_query=new WP_Query(array('post_type'=>'faq','posts_per_page'   => '3'));
+      
+      while($the_query->have_posts() ) : $the_query->the_post(); 
+            {  
+                
+                 
+              
+              ?>
+              
                       <li class="qa-menu__list">
-                        <h4 class="qa-menu__heading"><?php echo $qus_1;?></h4>
-                        <p class="info"><?php echo $ans_1; ?></p>
+                        <h4 class="qa-menu__heading"><?php the_title();?></h4>
+                        <p class="info"><?php the_content();?></p>
+                      </li>
+                       
+                        <?php
+                }  endwhile;?>
+                     <!--  <li class="qa-menu__list">
+                        <h4 class="qa-menu__heading">How much is the subscription fee for DRAUP?</h4>
+                        <p class="info">Depending on the modules, verticals as well as number of people in your organisation who want to access, the subscription fee varies. Each us on geip@zinnov.com for further details.</p>
                       </li>
                       <li class="qa-menu__list">
-                        <h4 class="qa-menu__heading"><?php echo $qus_2; ?></h4>
-                        <p class="info"><?php echo  $ans_2;?></p>
-                      </li>
-                      <li class="qa-menu__list">
-                        <h4 class="qa-menu__heading"><?php echo  $qus_3;?></h4>
-                        <p class="info"><?php echo $ans_3; ?></p>
-                      </li>
-                    </ul><a href="<?php echo get_option( 'siteurl' );?>/faq" class="link"><?php echo $faq_link;?></a>
+                        <h4 class="qa-menu__heading">How often is the DRAUP database updates?</h4>
+                        <p class="info">The DRAUP database and analysis is an ongoing process which is updates in real time to reflect the latest trends and data points.</p>
+                      </li> -->
+                    </ul><a href="<?php echo get_option( 'siteurl' );?>/faq" class="link">all questions</a>
                   </div>
                 </div>
               </div>
@@ -581,7 +637,7 @@ get_header();?>
 					
 					
                      <div class="form-group subscribe-form__group">
-                      <label for="email" class="input-label"><?php echo $email_text;?></label>
+                      <label for="email" class="input-label"><?php echo $email_address;?></label>
                       <input id="email" name="email" type="email" placeholder="sam@compayname.com" class="form-control input-field">
                       <button type="submit" class="submit-btn">submit</button>
                     </div>
@@ -591,7 +647,7 @@ get_header();?>
                   <div class="circle circle--lg circle--ring">   </div>
                 </div>
               </div>
-              <div class="text-center logo-footer"><img src="<?php echo get_field('footer_image');?>" alt="Draup" class="logo-footer__img"></div>
+              <div class="text-center logo-footer"><img src="<?php echo $footer_image;?>" alt="Draup" class="logo-footer__img"></div>
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js">
 <head>
-    <meta charset="UTF-8">
+      <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
       <title>Draup - White Papers</title>
@@ -20,11 +20,11 @@
       <link rel="shortcut icon" href="<?php echo esc_url( get_template_directory_uri() ); ?>/img/draup-favicon.ico" type="image/x-icon">
       <link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/css/main.css">
       <script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/plugins/modernizr.js"></script>
-     <?php wp_head(); ?>
+    <?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
-    <!--START: Header-->
+  <!--START: Header-->
     <header class="header">
       <nav role="navigation" class="navbar navbar--menu navbar--gray">
         <!--START: Container-->
@@ -36,7 +36,7 @@
               <div class="icon-bar-container"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></div>
             </button>
             <!--START: Brand Logo-->
-            <div class="navbar-brand navbar-brand--logo"><a href="<?php echo site_url();?>">
+            <div class="navbar-brand navbar-brand--logo"><a href="<?php echo site_url(); ?>">
                 <!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)-->
                 <svg id="Layer_1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 115 44" style="enable-background:new 0 0 115 44;" xml:space="preserve" class="header-logo">
                   <style type="text/css">

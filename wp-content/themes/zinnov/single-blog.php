@@ -10,6 +10,19 @@
 get_header('blog'); ?>
 
 <?php while ( have_posts() ) : the_post(); ?>
+<?php $blog_date = get_the_date( 'd M ', get_the_ID() );?>
+ <?php 
+
+$user=get_field('select_author');
+$auth = get_post($user); // gets author from post
+$author_name = $auth->user_name;
+
+$author_image = get_the_post_thumbnail( $user, 'user-thumbnail',array('alt' => 'Author image','class' => 'img-circle'));
+
+$author_desig = $auth->user_info;
+
+
+?>     
 <?php update_post_meta(get_the_id(), 'wpb_post_views_count', $newCount);?>
 <!--START: Main-->
     <main>
@@ -20,8 +33,8 @@ get_header('blog'); ?>
             <div class="contact-banner-container clearfix">
               <div class="col-sm-12">
                 <ul class="breadcrumb breadcrumb-menu breadcrumb-menu--gray breadcrumb-menu--margin">
-                  <li class="breadcrumb__list"><a href="javascript:void(0)" class="breadcrumb__link">home</a></li>
-                  <li class="breadcrumb__list"><a href="javascript:void(0)" class="breadcrumb__link">blog</a></li>
+                  <li class="breadcrumb__list"><a href="<?php echo site_url(); ?>" class="breadcrumb__link">home</a></li>
+                  <li class="breadcrumb__list"><a href="<?php echo get_option( 'siteurl' );?>/blog" class="breadcrumb__link">blog</a></li>
                   <li class="breadcrumb__list active"><?php echo get_field('relsilence_heading');?></li>
                 </ul>
                 <div class="row">
@@ -30,24 +43,27 @@ get_header('blog'); ?>
                       <div class="circle--sm circle circle--circleBlue"></div>
                       <div class="circle--md circle circle--circleOrange"></div>
                     </div>
-                    <h3 class="heading heading--black"><?php echo get_field('blog_detail_heading');?></h3>
-                    <div class="blog-posted"><?php echo get_field('blog_detail_date');?></div>
-                    <div class="blog-details-img"><img src="<?php echo get_field('blog_detail_image');?>" alt="Resiliance and Security" class="img-responsive"></div>
+                    <h3 class="heading heading--black"><?php the_title();?></h3>
+                    <div class="blog-posted"><?php echo $blog_date;?></div>
+                    <div class="blog-details-img"><?php echo get_the_post_thumbnail( get_the_ID(), 'blog-thumbnail',array('alt' => 'Blog image','class' => 'img-responsive')); ?></div>
                     <div class="col-sm-4 col-md-3">
                       <div class="row row--margin">
                         <figure class="author-wrapper">
-                          <div class="img-wrapper"><img src="<?php echo  get_field('blog_detail_author_image');?>" alt="Steve Snyder" class="img-circle"></div>
+                          <div class="img-wrapper"><?php echo $author_image; ?></div>
                           <figcaption class="author">
-                            <h5 class="author__name"><?php echo get_field('blog_detail_author_name');?></h5>
-                            <p class="author__info"><?php  echo get_field('blog_detail_author_info');?></p>
+                            <h5 class="author__name"><?php echo $author_name;?></h5>
+                            <p class="author__info"><?php  echo $author_desig;?></p>
                           </figcaption>
                         </figure>
                         <div class="social-menu-wrapper">
                           <h4 class="heading-small"><?php echo get_field('share_text');?></h4>
                           <ul class="social-menu">
-                            <li class="social-menu__list"><a href="<?php echo get_field('blog_detail_facebook');?>"><span class="social-menu__link social-menu__link--fb"><i class="icon-fb icon"></i></span>facebook</a></li>
-                            <li class="social-menu__list"><a href="<?php echo get_field('blog_detail_twitter');?>"><span class="social-menu__link social-menu__link--tw"><i class="icon-tw icon"></i></span>twitter</a></li>
-                            <li class="social-menu__list"><a href="<?php echo get_field('blog_detail_linkedin');?>"><span class="social-menu__link social-menu__link--ln"><i class="icon-ln icon"></i></span>linkedin</a></li>
+                            <li class="social-menu__list"><a href="https://www.facebook.com/sharer/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><span class="social-menu__link social-menu__link--fb"><i class="icon-fb icon"></i></span>facebook</a></li>
+                            <li class="social-menu__list"><a href="http://twitter.com/share?text=<?php the_title(); ?>&url=<?php the_permalink();?>" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><span class="social-menu__link social-menu__link--tw"><i class="icon-tw icon"></i></span>twitter</a></li>
+                            <li class="social-menu__list"><a href="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php the_title(); ?>&amp;url=<?php the_permalink(); ?>" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><span class="social-menu__link social-menu__link--ln"><i class="icon-ln icon"></i></span>linkedin</a></li>
                           </ul>
                         </div>
                       </div>
@@ -148,7 +164,7 @@ get_header('blog'); ?>
                     </div>
                   </div>
                 </div>
-                <div class="text-center logo-footer"><img src="<?php echo get_field('footer_image');?>" alt="Draup" class="logo-footer__img"></div>
+                 <div class="text-center logo-footer"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/footer-logo.svg" alt="Draup" class="logo-footer__img"></div>
               </div>
             </div>
           </div>

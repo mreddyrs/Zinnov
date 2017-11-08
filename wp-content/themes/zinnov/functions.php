@@ -79,6 +79,9 @@ function twentyfifteen_setup() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 	set_post_thumbnail_size( 825, 510, true );
+	add_image_size( 'blog-thumbnail',685,454 );
+	add_image_size( 'user-thumbnail', 0, 37 ); 
+	
 
 	// This theme uses wp_nav_menu() in two locations.
 	register_nav_menus( array(
@@ -524,6 +527,45 @@ function create_blog_taxonomies() {
 	register_taxonomy( 'list_blog', array( 'blog' ) , $args );
 }
 
+
+
+add_action( 'init', 'create_faq_taxonomies', 0 );
+
+// create two taxonomies, genres and writers for the post type "book"
+function create_faq_taxonomies() {
+	// Add new taxonomy, make it hierarchical (like categories)
+	$labels = array(
+			'name'              => _x( 'Categories', 'zinnov' ),
+			'singular_name'     => _x( 'Category', 'zinnov' ),
+			'search_items'      => __( 'Search Category', 'zinnov' ),
+			'all_items'         => __( 'All Category', 'zinnov' ),
+			'parent_item'       => __( 'Parent Category', 'zinnov' ),
+			'parent_item_colon' => __( 'Parent Category:', 'zinnov' ),
+			'edit_item'         => __( 'Edit Category', 'zinnov' ),
+			'update_item'       => __( 'Update Category', 'zinnov' ),
+			'add_new_item'      => __( 'Add New Category', 'zinnov' ),
+			'new_item_name'     => __( 'New Category Name', 'zinnov' ),
+			'menu_name'         => __( 'Category', 'zinnov' ),
+	);
+
+	$rewrite = array(
+			'slug'                       => 'faq-category',
+			'with_front'                 => true,
+			'hierarchical'               => false,
+	);
+	$args = array(
+			'labels'                     => $labels,
+			'hierarchical'               => true,
+			'public'                     => true,
+			'show_ui'                    => true,
+			'show_admin_column'          => true,
+			'show_in_nav_menus'          => true,
+			'show_tagcloud'              => true,
+			'rewrite'                    => $rewrite,
+	);
+
+	register_taxonomy( 'list_faq', array( 'faq' ) , $args );
+}
 function wpb_tag_cloud() { 
 $tags = get_tags();
 $args = array(
@@ -552,9 +594,55 @@ include_once( 'inc/Theme-control/ot-loader.php' );
 include_once( 'inc/Theme-control/assets/theme-mode/theme-options.php' );
 
 include_once( 'inc/custom-post-type-blog.php' );
+include_once( 'inc/custom-post-type-users.php' );
+//include_once( 'inc/custom-post-type-whitepapersusers.php' );
 include_once( 'inc/custom-post-type-whitepapers.php' );
+include_once( 'inc/custom-post-type-faq.php' );
 
 
+
+
+function zinnov_pagination()
+{
+	global $wp_query;
+    $big = 999999999;
+    $pages = paginate_links(array(
+        'base' => str_replace($big, '%#%', get_pagenum_link($big)),
+        'format' => '?page=%#%',
+        'current' => max(1, get_query_var('paged')),
+        'total' => $wp_query->max_num_pages,
+        'prev_next' => false,
+        'type' => 'array',
+        'prev_next' => TRUE,
+        'prev_text' => '&larr; Previous',
+        'next_text' => 'Next &rarr;',
+            ));
+    if (is_array($pages)) {
+        $current_page = ( get_query_var('paged') == 0 ) ? 1 : get_query_var('paged');
+        echo '<ul class="pagination">';
+        foreach ($pages as $i => $page) {
+            if ($current_page == 1 && $i == 0) {
+                echo "<li class='active'>$page</li>";
+            } else {
+                if ($current_page != 1 && $current_page == $i) {
+                    echo "<li class='active'>$page</li>";
+                } else {
+                    echo "<li>$page</li>";
+                }
+            }
+        }
+        echo '</ul>';
+    }
+}
+
+add_action( 'pre_get_posts' ,'wpse222471_query_post_type_blog', 1, 1 );
+function wpse222471_query_post_type_blog( $query )
+{
+    if ( ! is_admin() && is_post_type_archive( 'blog' ) && $query->is_main_query() )
+    {
+        $query->set( 'posts_per_page', 4 ); //set query arg ( key, value )
+    }
+}
 
 
 

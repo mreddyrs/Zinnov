@@ -77,39 +77,39 @@ get_header('about'); ?>
             <div class="clearfix features">
               <div class="col-sm-4 features__list">
                 <div class="card-wrapper">
-                  <h3 class="card-title"><?php echo get_field('customer_heading');?></h3>
+                <h3 class="card-title"><?php echo get_field('customer_heading');?></h3>
                   <p class="info"><?php echo get_field('customer_subtext');?></p>
                   <ul class="features-list-menu">
-                   <li class="features-list-menu__item"><?php echo get_field('customer_point1');?></li>
-                    <li class="features-list-menu__item"><?php echo get_field('customer_point2');?></li>
-                    <li class="features-list-menu__item"><?php echo get_field('customer_point3');?></li>
-                    <li class="features-list-menu__item"><?php echo get_field('customer_point4');?></li>
-                  </ul><a href="<?php echo get_option( 'siteurl' );?>/contact" class="link">request demo</a>
-                  </div>
+                    <li class="features-list-menu__item"><span><?php echo get_field('customer_point1');?></span></li>
+                    <li class="features-list-menu__item"><span><?php echo get_field('customer_point2');?></span></li>
+                    <li class="features-list-menu__item"><span><?php echo get_field('customer_point3');?></span></li>
+                    <li class="features-list-menu__item"><span><?php echo get_field('customer_point4');?></span></li>
+                  </ul><a href="<?php echo get_option( 'siteurl' );?>/requestdemo" class="link">request demo</a>
+                </div>
               </div>
               <div class="col-sm-4 features__list">
                 <div class="card-wrapper">
                   <h3 class="card-title"><?php echo get_field('stakeholder_heading');?></h3>
                   <p class="info"><?php echo get_field('stakeholder_subtext');?></p>
                   <ul class="features-list-menu">
-                    <li class="features-list-menu__item"><?php echo get_field('stakeholder_point1');?></li>
-                    <li class="features-list-menu__item"><?php echo get_field('stakeholder_point2');?></li>
-                    <li class="features-list-menu__item"><?php echo get_field('stakeholder_point3');?></li>
-                    <li class="features-list-menu__item"><?php echo get_field('stakeholder_point4');?></li>
-                  </ul><a href="<?php echo get_option( 'siteurl' );?>/contact" class="link">request demo</a>
-                 </div>
+                    <li class="features-list-menu__item"><span><?php echo get_field('stakeholder_point1');?></span></li>
+                    <li class="features-list-menu__item"><span><?php echo get_field('stakeholder_point2');?></span></li>
+                    <li class="features-list-menu__item"><span><?php echo get_field('stakeholder_point3');?></span></li>
+                    <li class="features-list-menu__item"><span><?php echo get_field('stakeholder_point4');?></span></li>
+                  </ul><a href="<?php echo get_option( 'siteurl' );?>/requestdemo" class="link">request demo</a>
+                </div>
               </div>
               <div class="col-sm-4 features__list">
                 <div class="card-wrapper">
                   <h3 class="card-title"><?php echo get_field('ecosystem_heading');?></h3>
-                  <p class="info"><?php echo get_field('ecosystem_subtext');?></p>
+                  <p class="info"><?php echo get_field('ecosystem_subtext');?> </p>
                   <ul class="features-list-menu">
-                    <li class="features-list-menu__item"><?php echo get_field('ecosystem_point1');?></li>
-                    <li class="features-list-menu__item"><?php echo get_field('ecosystem_point2');?></li>
-                    <li class="features-list-menu__item"><?php echo get_field('ecosystem_point3');?></li>
-                    <li class="features-list-menu__item"><?php echo get_field('ecosystem_point4');?></li>
-                  </ul><a href="<?php echo get_option( 'siteurl' );?>/contact" class="link">request demo</a>
-                </div>
+                    <li class="features-list-menu__item"><span><?php echo get_field('ecosystem_point1');?></span></li>
+                    <li class="features-list-menu__item"><span><?php echo get_field('ecosystem_point2');?> </span></li>
+                    <li class="features-list-menu__item"><span><?php echo get_field('ecosystem_point3');?></span></li>
+                    <li class="features-list-menu__item"><span><?php echo get_field('ecosystem_point4');?></span></li>
+                  </ul><a href="<?php echo get_option( 'siteurl' );?>/requestdemo" class="link">request demo</a>
+               </div>
               </div>
             </div>
           </div>
@@ -189,6 +189,7 @@ get_header('about'); ?>
                         <p class="info"><?php echo get_field('big_data_text');?></p>
                         <p class="info info--hasMargin"><?php echo get_field('big_data_subtext');?></p>
                         <p class="info info--hasMargin"><?php echo get_field('big_data_subtext2');?></p>
+                         <p class="info info--hasMargin"><?php echo get_field('big_data_subtext3');?></p>
                       </div>
                     </li>
                   </ul>

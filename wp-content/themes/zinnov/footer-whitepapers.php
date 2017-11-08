@@ -9,7 +9,7 @@
  * @since Twenty Fifteen 1.0
  */
 ?>
- <!--START: Footer-->
+<!--START: Footer-->
     <footer class="footer">
       <div class="container">
         <div class="row">
@@ -31,11 +31,16 @@
         </div>
       </div>
     </footer>
-    
+ 
 <?php wp_footer(); ?>
  <script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/plugins/jquery.js"></script>
     <script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/plugins/bootstrap.js"></script>
-    <script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/request-demo-header-animation.js"></script>
+    <script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/plugins/parsley.js"></script>
+<script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/blog-header-animation.js"></script>
+<script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/plugins/select.js"></script>
+<script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/select-init.js"></script>
+
+ 
+
   </body>
 </html>
- 

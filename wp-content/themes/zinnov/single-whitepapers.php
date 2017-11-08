@@ -7,8 +7,10 @@
  * @since Twenty Fifteen 1.0
  */
 
-get_header('whitepapers'); ?>
+get_header('whitepaperdetails'); ?>
 <?php while ( have_posts() ) : the_post(); ?>
+<?php $whitepapers_date = get_the_date( 'd M Y', get_the_ID() );?>
+<?php $shorttitle = wp_trim_words( $trimtitle, $num_words = 10, $more = '… ' );?>
 	<main>
       <!--START:  Banner-->
       <section class="section section--BlogDetailsBanner">
@@ -19,13 +21,13 @@ get_header('whitepapers'); ?>
                 <ul class="breadcrumb breadcrumb-menu breadcrumb-menu--gray">
                   <li class="breadcrumb__list"><a href="<?php echo site_url(); ?>" class="breadcrumb__link">home</a></li>
                   <li class="breadcrumb__list"><a href="<?php echo get_option( 'siteurl' );?>/whitepapers" class="breadcrumb__link">white papers</a></li>
-                  <li class="breadcrumb__list active"><?php echo get_field('white_single_page_name');?></li>
+                  <li class="breadcrumb__list active"><?php echo get_field('single_page_breadcrums_name');?></li>
                 </ul>
                 <div class="row">
                   <div class="col-sm-9 blog-details-wrapper">
-                    <h3 class="heading heading--black"><?php echo get_field('white_paper_heading');?></h3>
-                    <div class="blog-posted"><?php echo get_field('whitepaper_date');?></div>
-                    <div class="blog-details-img"><img src="<?php echo get_field('white_paper_detail_image');?>" alt="Interpreting Signals" class="img-responsive"></div>
+                    <h3 class="heading heading--black"><?php the_title();?></h3>
+                    <div class="blog-posted"><?php echo $whitepapers_date;?></div>
+                    <div class="blog-details-img"><?php echo get_the_post_thumbnail( get_the_ID(), 'whitepapers-thumbnail',array('alt' => 'whitepapers image','class' => 'img-responsive')); ?></div>
                     <div class="col-sm-4 col-md-3">
                       <div class="row">
                         <div class="download-section"><a href="<?php echo get_field('upload_pdf');?>" download class="btn btn--blue btn--sm"><i class="icon-pdf"> </i>download</a>
@@ -34,9 +36,12 @@ get_header('whitepapers'); ?>
                         <div class="social-menu-wrapper">
                           <h4 class="heading-small"><?php echo get_field('share_heading');?></h4>
                           <ul class="social-menu">
-                            <li class="social-menu__list"><a href="<?php echo get_field('facebook_link');?>"><span class="social-menu__link social-menu__link--fb"><i class="icon-fb icon"></i></span>facebook</a></li>
-                            <li class="social-menu__list"><a href="<?php echo get_field('twiiter_link');?>"><span class="social-menu__link social-menu__link--tw"><i class="icon-tw icon"></i></span>twitter</a></li>
-                            <li class="social-menu__list"><a href="<?php echo get_field('linkin_link');?>"><span class="social-menu__link social-menu__link--ln"><i class="icon-ln icon"></i></span>linkedin</a></li>
+                            <li class="social-menu__list"><a href="https://www.facebook.com/sharer/sharer.php?u=<?php the_permalink();?>&amp;t=<?php the_title(); ?>" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><span class="social-menu__link social-menu__link--fb"><i class="icon-fb icon"></i></span>facebook</a></li>
+                            <li class="social-menu__list"><a href="http://twitter.com/share?text=<?php the_title(); ?>&url=<?php the_permalink();?>" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><span class="social-menu__link social-menu__link--tw"><i class="icon-tw icon"></i></span>twitter</a></li>
+                            <li class="social-menu__list"><a href="http://www.linkedin.com/shareArticle?mini=true&amp;title=<?php the_title(); ?>&amp;url=<?php the_permalink(); ?>" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><span class="social-menu__link social-menu__link--ln"><i class="icon-ln icon"></i></span>linkedin</a></li>
                           </ul>
                         </div>
                       </div>
@@ -96,7 +101,7 @@ get_header('whitepapers'); ?>
                     
                   </div>
                 </div>
-                <div class="text-center logo-footer"><img src="<?php echo get_field('footer_image');?>" alt="Draup" class="logo-footer__img"></div>
+                 <div class="text-center logo-footer"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/footer-logo.svg" alt="Draup" class="logo-footer__img"></div>
               </div>
             </div>
           </div>
@@ -104,4 +109,6 @@ get_header('whitepapers'); ?>
       </section>
     </main>
 <?php endwhile; ?>
-<?php get_footer('whitepapers'); ?>
+<?php get_footer('whitepaperdetails'); ?>
+
+

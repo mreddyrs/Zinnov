@@ -18,6 +18,7 @@
 
 get_header('blog'); ?>
 
+<?php zinnov_pagination();?>
 	 <!--START: Main-->
     <main>
       <!--START:  Banner-->
@@ -53,13 +54,27 @@ get_header('blog'); ?>
       while($the_query->have_posts() ) : $the_query->the_post(); 
             {  
             	
+            	$trimtitle = get_the_content();
+    
+            $shorttitle = wp_trim_words( $trimtitle, $num_words = 10, $more = '… ' );
               
               ?>
-                        
+                    <?php 
+
+$user=get_field('select_author');
+$auth = get_post($user); // gets author from post
+$author_name = $auth->user_name;
+
+$author_image = $auth->user_image;
+
+$blog_permalink = $auth->user_info;
+
+
+?>    
                           <div class="card-thumbnail__link">
-                            <div class="card-thumbnail-img card-thumbnail-img--overlay"><img src="<?php echo get_field('blog_image');?> " alt="" class="card-thumbnail img-responsive">
-                              <h3 class="card-thumbnail-heading"><?php echo get_field('blog_heading');?></h3>
-                              <div class="label label--rect label--blue">by <span class="user-name"><?php echo get_field('blog_user_name');?> </span><?php echo get_field('blog_date');?></div>
+                            <div class="card-thumbnail-img card-thumbnail-img--overlay"><?php echo get_the_post_thumbnail( get_the_ID(), 'blog-thumbnail',array('alt' => 'Blog image','class' => 'card-thumbnail img-responsive')); ?>
+                              <h3 class="card-thumbnail-heading"><?php the_title();?></h3>
+                              <div class="label label--rect label--blue">by <span class="user-name"><?php echo $author_name;?> </span><?php echo get_field('blog_date');?></div>
                             </div>
                             <div class="caption card-caption">
                               <div class="circle circle--ring circle--sm circle--ringBlue"></div>
@@ -72,7 +87,7 @@ get_header('blog'); ?>
 								echo $term -> name;
             					}*/
             ?>
-                              <p class="info"><?php echo get_field('blog_info');?></p><a href="<?php echo get_permalink();?>" class="link"><?php echo get_field('link_text');?></a>
+                              <p class="info"><?php echo $shorttitle;?></p><a href="<?php echo get_permalink();?>" class="link"><?php echo get_field('link_text');?></a>
                             </div>
                           </div>
                             <?php
@@ -80,7 +95,7 @@ get_header('blog'); ?>
                         </div>
                        
                         <!--START: Thumbnail Card : Updates-->
-                        <div class="thumbnail card-thumbnail card-thumbnail-updates clearfix">
+                        <div class="thumbnail card-thumbnail card-thumbnail--noMargin card-thumbnail-updates clearfix">
                           <div class="card-circle">
                             <div class="circle circle--sm circle--filled circle--circleBlue"></div>
                             <div class="circle circle--md circle--filled circle--circleOrange"></div>
@@ -89,11 +104,14 @@ get_header('blog'); ?>
                           
                           <?php 
 	  
-      $the_query=new WP_Query(array('post_type'=>'blog','posts_per_page'   => '3'));
+      $the_query=new WP_Query(array('post_type'=>'blog','posts_per_page'   => '3','paged'=>$paged));
       
       while($the_query->have_posts() ) : $the_query->the_post(); 
             {  
-                
+                $blog_date = get_the_date( 'd M Y', get_the_ID() );
+            	$trimtitle = get_the_content();
+    
+            $shorttitle = wp_trim_words( $trimtitle, $num_words = 10, $more = '… ' );
                  
             	$menu_id = get_the_id();
             	
@@ -125,39 +143,71 @@ $terms = wp_get_post_tags( $menu_id ,"tag");
             	//if(!isset($_GET["cat"]) || !isset($_GET["tag"])){}
             	if($exist=="exist"){
               ?>
+<?php 
+
+$user=get_field('select_author');
+$auth = get_post($user); // gets author from post
+$author_name = $auth->user_name;
+
+$author_image = get_the_post_thumbnail( $user, 'user-thumbnail');
+
+$author_desig = $auth->user_info;
+
+
+?> 
                             <!--Start: Post 1-->
                             <li class="blog-post__list"><a href="<?php echo get_permalink();?>" class="media blog-media">
-                            <div class="blog-media__img blog-media__img--md"><img src="<?php echo get_field('blog_detail_image');?>" class="media-object img-responsive"></div>
-                                <div class="blog-media__body">
-                                  <h4 class="media-heading"><?php echo get_field('blog_detail_heading');?></h4>
-                                  <p class="info"><?php echo get_field('media_info');?></p>
+                            <div class="blog-media__img blog-media__img--md"><?php echo get_the_post_thumbnail( get_the_ID(), 'blog-thumbnail',array('alt' => 'Blog image','class' => 'media-object img-responsive')); ?></div>
+                                <div class="blog-media__body">   
+                                  <h4 class="media-heading"><?php the_title();?></h4>
+                                  <p class="info"><?php echo $shorttitle;?></p>
                                   <div class="blog-posted">
-                                    <div class="blog-posted__user"><img src="<?php echo get_field('blog_detail_author_image');?>" alt="Eddie Singh"></div>
+                                    <div class="blog-posted__user"><?php echo $author_image; ?></div>
                                     <div class="blog-posted__date">
-                                      <div><?php echo get_field('blog_detail_date');?></div>by <span><?php echo get_field('blog_detail_author_name');?></span><span class="user-designation"><?php echo get_field('blog_detail_author_info');?></span>
+                                      <div><?php echo $blog_date;?></div>by <span><?php echo $author_name;?></span><span class="user-designation"><?php echo $author_desig;?></span>
                                     </div>
                                   </div>
                                 </div></a></li>
                                 <?php
-                }}  endwhile;?>
+                }}  endwhile;
+                
+               
+                ?>
                 
                 
+                
+                
+                
+                         
                            
                           </ul>
                           <!--start: Pagination-->
-                     <!--      <ul class="pagination pagination-menu">
-                      <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-                            <li class="active"><a href="#"><?php previous_post_link(  ); ?></a></li>
-                            <li><a href="javascript:void(0)"><?php next_post_link( '%link', 'Next Post »' ); ?></a></li>
+                    <!-- <ul class="pagination pagination-menu">
+                    <?php the_posts_pagination( 
+                    array(
+                    	'mid_size           '=> '2',
+                        'screen_reader_text' => ' ', 
+                        'prev_text'          => __( 'Previous Posts' ),
+                        'next_text'          => __( 'Next Posts' ),
+
+                      ) ); ?>
+                      
+              
+              
+ 				
+ 							<li class="active"><a href=""></a></li>
+ 							<li><a href="?page=1">1</a></li>
+                            <li><a href="?page=2">2</a></li>
+                            <li><a href="?page=3">3</a></li>
+                            <li><a href="?page=4">4</a></li>
+                            <li><a href="?page=2">next</a></li>
                          
-                            <?php endwhile; ?>
-                             <?php endif; ?>
-                          </ul>
-                          -->
+                          </ul> -->
                         </div>
                       </div>
                     </div>
                   </div>
+                 
                   <div class="col-sm-4">
                     <div class="row">
                       <div class="blog-right-content">
@@ -231,7 +281,7 @@ $terms = wp_get_post_tags( $menu_id ,"tag");
                     </div>
                   </div>
                 </div>
-                <div class="text-center logo-footer"><img src="<?php echo get_field('footer_image');?>" alt="Draup" class="logo-footer__img"></div>
+               <div class="text-center logo-footer"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/footer-logo.svg" alt="Draup" class="logo-footer__img"></div>
               </div>
             </div>
           </div>
@@ -239,36 +289,9 @@ $terms = wp_get_post_tags( $menu_id ,"tag");
       </section>
     </main>
 <?php get_footer('blog'); ?>
-
 <script type="text/javascript">
-/*
-function getBlog() {
-	//alert(1);
-	var blog=document.getElementById('blog-post__list').value;
-		
-	
-	 
-		var data = {
-			'action': 'getBlog',
-			'blog': blog
-			
-		};
-		
-			jQuery.post(ajaxurl, data, function(response) {
-				
-			var temp=response.split('$');
-			$("#blog_detail_image").html(temp[0]);
-			$("#blog_detail_heading").html(temp[1]);
-			$("#media_info").html(temp[2]);
-			$("#blog_detail_author_image").html(temp[3]);
-			$("#blog_detail_date").html(temp[4]);
-			$("#blog_detail_author_name").html(temp[5]);
-			$("#blog_detail_author_info").html(temp[6]);
-		 
-			
-
-
-			
-		});
-	}*/
+$(document).ready(function() {
+    $('.pagenavi a').each(function(i,a){$(a).attr('href',$(a).attr('href')+'#blog')});
+});
 </script>
+
